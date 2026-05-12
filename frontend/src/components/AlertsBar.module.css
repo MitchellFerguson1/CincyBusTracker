@@ -1,0 +1,78 @@
+.container {
+  position: absolute;
+  bottom: 32px; /* sits just above the status bar */
+  left: 0;
+  right: 0;
+  z-index: 18;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 14px;
+  background: rgba(254, 243, 199, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  border-top: 1px solid rgba(252, 211, 77, 0.5);
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+.toggle:hover { background: rgba(253, 230, 138, 0.97); }
+
+.icon { font-size: 13px; }
+
+.chevron { margin-left: auto; font-size: 10px; opacity: 0.7; }
+
+.list {
+  background: rgba(255, 251, 235, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(253, 230, 138, 0.6);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.alert {
+  padding: 8px 14px;
+  border-bottom: 1px solid #fde68a;
+}
+.alert:last-child { border-bottom: none; }
+
+.alertHeader {
+  font-weight: 600;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.alertDesc {
+  margin-top: 3px;
+  color: #92400e;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.alertEffect {
+  margin-top: 4px;
+  display: inline-block;
+  font-size: 0.78em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #fcd34d;
+  color: #78350f;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+@media (max-width: 640px) {
+  .container { bottom: 40px; }
+}

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CincyBusTrackr — Product Requirements Specification</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1419;
+    --ink-soft: #3d4752;
+    --ink-muted: #6e7a86;
+    --accent: #0057b8;
+    --accent-dark: #003d82;
+    --accent-light: #e6f0fa;
+    --danger: #c0392b;
+    --surface: #ffffff;
+    --surface-alt: #f7f8fa;
+    --border: #e1e5ea;
+    --border-strong: #c8ced6;
+    --success: #1a7a4c;
+    --warning: #b8860b;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--surface);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--ink);
+    color: #fff;
+    overflow-y: auto;
+    padding: 2rem 0;
+    z-index: 100;
+    font-size: 0.82rem;
+  }
+  nav .nav-brand {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1rem;
+  }
+  nav .nav-brand h2 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  nav .nav-brand span {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+  nav ol {
+    list-style: none;
+    padding: 0 1rem;
+  }
+  nav ol li a {
+    display: block;
+    padding: 0.4rem 0.5rem;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  nav ol li a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  nav ol li.section-head > a {
+    color: rgba(255,255,255,0.9);
+    font-weight: 700;
+    margin-top: 0.6rem;
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: 260px;
+    max-width: 820px;
+    padding: 3rem 3rem 6rem;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    padding: 4rem 0 3rem;
+    border-bottom: 3px solid var(--ink);
+    margin-bottom: 3rem;
+  }
+  .cover .draft-badge {
+    display: inline-block;
+    background: var(--danger);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .cover h1 {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .cover .subtitle {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+  }
+  .cover .meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+  }
+  .cover .meta strong { color: var(--ink-soft); }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin: 2rem 0 0.75rem;
+  }
+  h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  ul, ol {
+    margin: 0 0 1.25rem 1.5rem;
+  }
+  li { margin-bottom: 0.35rem; }
+  li::marker { color: var(--ink-muted); }
+
+  strong { font-weight: 700; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    border-left: 4px solid;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.92rem;
+  }
+  .callout-critical {
+    border-color: var(--danger);
+    background: #fdf2f1;
+  }
+  .callout-critical .callout-label { color: var(--danger); }
+  .callout-info {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .callout-info .callout-label { color: var(--accent); }
+  .callout-warning {
+    border-color: var(--warning);
+    background: #fdf8ec;
+  }
+  .callout-warning .callout-label { color: var(--warning); }
+  .callout-label {
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.88rem;
+  }
+  thead th {
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  thead th:first-child { border-radius: 6px 0 0 0; }
+  thead th:last-child { border-radius: 0 6px 0 0; }
+  tbody td {
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: var(--surface-alt); }
+  tbody tr:last-child td:first-child { border-radius: 0 0 0 6px; }
+  tbody tr:last-child td:last-child { border-radius: 0 0 6px 0; }
+
+  /* ── BUS ICON DEMO ── */
+  .icon-demo {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .bus-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    padding: 0 12px 0 8px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .bus-icon::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 10px solid;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+  }
+  .bus-icon.rt4   { background: #0057b8; }  .bus-icon.rt4::after   { border-left-color: #0057b8; }
+  .bus-icon.rt43  { background: #c0392b; }  .bus-icon.rt43::after  { border-left-color: #c0392b; }
+  .bus-icon.rt41  { background: #1a7a4c; }  .bus-icon.rt41::after  { border-left-color: #1a7a4c; }
+  .bus-icon.rt17  { background: #8e44ad; }  .bus-icon.rt17::after  { border-left-color: #8e44ad; }
+  .bus-icon-label {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+
+  /* ── SELECTOR MOCKUP ── */
+  .selector-mockup {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+  }
+  .selector-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .selector-row:last-child { margin-bottom: 0; }
+  .selector-row-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 0.35rem;
+  }
+  .sel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 5px;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    background: #fff;
+    color: var(--ink-soft);
+    cursor: default;
+  }
+  .sel-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .sel-btn .caret {
+    font-size: 0.6rem;
+    opacity: 0.5;
+  }
+
+  /* ── PHASE BADGES ── */
+  .phase-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+  }
+  .phase-mvp  { background: #d4edda; color: #155724; }
+  .phase-2    { background: #cce5ff; color: #004085; }
+  .phase-3    { background: #f3e8ff; color: #553c7a; }
+
+  /* ── RISK MATRIX ── */
+  .risk-high   { color: var(--danger); font-weight: 700; }
+  .risk-medium { color: var(--warning); font-weight: 700; }
+  .risk-low    { color: var(--success); font-weight: 700; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main { margin-left: 0; padding: 2rem 1.5rem 4rem; }
+    .cover h1 { font-size: 2.2rem; }
+    .cover .meta { flex-direction: column; gap: 0.5rem; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    main { margin-left: 0; max-width: none; }
+    .cover { break-after: page; }
+    h2 { break-after: avoid; }
+    table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <h2>CincyBusTrackr</h2>
+    <span>Product Spec v1.0</span>
+  </div>
+  <ol>
+    <li class="section-head"><a href="#exec-summary">1. Executive Summary</a></li>
+    <li class="section-head"><a href="#problem">2. Problem Statement</a></li>
+    <li class="section-head"><a href="#data">3. Data Sources</a></li>
+    <li class="section-head"><a href="#users">4. Target Users</a></li>
+    <li class="section-head"><a href="#functional">5. Functional Requirements</a></li>
+    <li><a href="#route-selector">&ensp;5.1 Route Selection</a></li>
+    <li><a href="#map-display">&ensp;5.2 Map Display</a></li>
+    <li><a href="#bus-icon">&ensp;5.3 Bus Icons</a></li>
+    <li><a href="#realtime">&ensp;5.4 Real-Time Refresh</a></li>
+    <li><a href="#info-panel">&ensp;5.5 Info Panel</a></li>
+    <li class="section-head"><a href="#nonfunctional">6. Non-Functional Reqs</a></li>
+    <li class="section-head"><a href="#architecture">7. Architecture</a></li>
+    <li class="section-head"><a href="#classification">8. Route Classification</a></li>
+    <li class="section-head"><a href="#variants">9. Trip Variants</a></li>
+    <li class="section-head"><a href="#phasing">10. Phasing</a></li>
+    <li class="section-head"><a href="#risks">11. Risks</a></li>
+    <li class="section-head"><a href="#open-questions">12. Open Questions</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <!-- ══════════ COVER ══════════ -->
+  <div class="cover">
+    <div class="draft-badge">Draft — For Review</div>
+    <h1>CincyBusTrackr</h1>
+    <p class="subtitle">Real-Time Cincinnati Metro Bus Tracker — Product Requirements Specification</p>
+    <div class="meta">
+      <div><strong>Version:</strong> 1.0</div>
+      <div><strong>Date:</strong> May 2026</div>
+      <div><strong>Status:</strong> Draft</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 1. EXECUTIVE SUMMARY ══════════ -->
+  <h2 id="exec-summary">1. Executive Summary</h2>
+  <p>CincyBusTrackr is a web application that provides real-time visualization of Cincinnati Metro (SORTA) bus positions across all fixed routes. It replaces the defunct Metro real-time tracking tool — removed from go-metro.com in late 2025, fully offline as of early 2026 — with a significantly enhanced multi-route "command center" view.</p>
+  <p><strong>Core value proposition:</strong> A transit enthusiast and commuter tool that displays multiple routes simultaneously with directional context. The former Metro tracker was limited to 2 routes at a time, each showing only one direction. This project removes both constraints.</p>
+  <p><strong>Inspiration:</strong> <a href="https://www.traintrackr.io/">TrainTrackr.io</a> — physical LED maps showing real-time train positions for Boston, NYC, Chicago, DC, and Bay Area transit systems. CincyBusTrackr is the software equivalent adapted for Cincinnati's bus network.</p>
+
+  <!-- ══════════ 2. PROBLEM ══════════ -->
+  <h2 id="problem">2. Problem Statement</h2>
+  <p>Metro's official real-time tracker was removed without replacement. Its limitations were severe:</p>
+  <ul>
+    <li>Maximum of <strong>2 routes</strong> viewable simultaneously</li>
+    <li>Each route displayed only <strong>one direction</strong> (inbound OR outbound) per panel</li>
+    <li>No way to see both directions of a single route at once</li>
+    <li>Workaround required opening 15+ browser tabs across multiple monitors</li>
+  </ul>
+  <p>Third-party apps (Transit App, Google Maps) show individual route arrivals but do not provide a system-wide real-time overview. No existing tool fills this gap.</p>
+
+  <!-- ══════════ 3. DATA ══════════ -->
+  <h2 id="data">3. Data Sources &amp; Feasibility</h2>
+
+  <h3>3.1 GTFS Static Feed</h3>
+  <p>Metro publishes a GTFS static feed containing all route definitions, stop locations, trip patterns, and schedules.</p>
+  <table>
+    <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>URL</td><td><code>go-metro.com/uploads/GTFS/google_transit_info.zip</code></td></tr>
+      <tr><td>Update Frequency</td><td>At least quarterly (per Metro developer page)</td></tr>
+      <tr><td>License</td><td>Non-exclusive, revocable, as-is (SORTA open data license)</td></tr>
+      <tr><td>Contents</td><td>routes.txt, stops.txt, trips.txt, stop_times.txt, shapes.txt, calendar.txt</td></tr>
+      <tr><td>Active Period</td><td>Current feed: Mar 1 – May 30, 2026</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.2 GTFS-Realtime Feed</h3>
+  <p>Metro publishes a GTFS-RT protobuf feed providing live vehicle positions, trip updates, and service alerts.</p>
+  <table>
+    <thead><tr><th>Feed Type</th><th>Endpoint</th></tr></thead>
+    <tbody>
+      <tr><td>Vehicle Positions + Trip Updates</td><td><code>tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/gtfs-realtime/trapezerealtimefeed.pb</code></td></tr>
+      <tr><td>Service Alerts</td><td><code>tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/alert/alerts.pb</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-critical">
+    <div class="callout-label">Critical Dependency</div>
+    <p>This entire project is viable only as long as Metro continues publishing the GTFS-RT feed. The feed URL and availability must be tested and monitored. If Metro restricts access or requires API keys in the future, the project would need to negotiate access. There is no technical workaround — no feed means no project.</p>
+  </div>
+
+  <h3>3.3 Stop Data</h3>
+  <p>All 3,700+ stops with unique IDs, lat/lon coordinates, and route associations are included in the GTFS static feed (<code>stops.txt</code>). The partially-collected manual stop dataset is unnecessary unless it contains enrichment data not in the GTFS feed (informal stop names, accessibility notes, etc.). Verify before duplicating effort.</p>
+
+  <h3>3.4 License Considerations</h3>
+  <ul>
+    <li>SORTA trademarks may not be used without written approval — <strong>do not use "Metro" branding or logo</strong></li>
+    <li>Data is provided as-is with no warranty</li>
+    <li>License is revocable at any time</li>
+  </ul>
+  <div class="callout callout-info">
+    <div class="callout-label">Recommendation</div>
+    <p>Use project-specific branding (CincyBusTrackr or similar) and include a visible disclaimer: "Not affiliated with or endorsed by SORTA/Cincinnati Metro."</p>
+  </div>
+
+  <!-- ══════════ 4. USERS ══════════ -->
+  <h2 id="users">4. Target Users</h2>
+  <table>
+    <thead><tr><th>Persona</th><th>Use Case</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>Transit Enthusiast</td><td>System-wide overview, monitoring multiple routes</td><td><strong>Primary</strong></td></tr>
+      <tr><td>Daily Commuter</td><td>Check 1–2 routes before leaving, confirm bus position</td><td>Secondary</td></tr>
+      <tr><td>Transfer Planner</td><td>Monitor two connecting routes simultaneously</td><td>Secondary</td></tr>
+      <tr><td>Operations (informal)</td><td>Unofficial system visibility during disruptions</td><td>Tertiary</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ 5. FUNCTIONAL ══════════ -->
+  <h2 id="functional">5. Functional Requirements</h2>
+
+  <h3 id="route-selector">5.1 Route Selection Panel</h3>
+  <p>The route selector is the primary control surface. It uses a <strong>two-axis selection model</strong>: direction × route category.</p>
+
+  <h4>5.1.1 Direction Selector (Row 1)</h4>
+  <p>Three mutually-exclusive toggle buttons:</p>
+  <table>
+    <thead><tr><th>Button</th><th>Behavior</th></tr></thead>
+    <tbody>
+      <tr><td>Inbound</td><td>Show only inbound trips on selected routes</td></tr>
+      <tr><td>Outbound</td><td>Show only outbound trips on selected routes</td></tr>
+      <tr><td><strong>All</strong></td><td>Show both directions simultaneously <em>(default)</em></td></tr>
+    </tbody>
+  </table>
+  <p>"All" is the default state. When active, the bus icon's directional indicator (see 5.3) becomes essential for distinguishing direction of travel.</p>
+
+  <h4>5.1.2 Route Category Selector (Row 2)</h4>
+  <p>Category buttons, each functioning as a dropdown with multi-select:</p>
+  <table>
+    <thead><tr><th>Button</th><th>Dropdown Contents</th></tr></thead>
+    <tbody>
+      <tr><td><strong>All</strong></td><td>No dropdown — selects every route in the system</td></tr>
+      <tr><td>Core</td><td>"All Core" toggle at top + individual Core routes</td></tr>
+      <tr><td>Major</td><td>"All Major" toggle at top + individual Major routes</td></tr>
+      <tr><td>Minor</td><td>"All Minor" toggle at top + individual Minor routes</td></tr>
+      <tr><td>Commuter</td><td>"All Commuter" toggle at top + individual Commuter routes</td></tr>
+      <tr><td>Express</td><td>"All Express" toggle at top + individual Express routes</td></tr>
+    </tbody>
+  </table>
+
+  <h4>5.1.3 Selector Mockup</h4>
+  <div class="selector-mockup">
+    <div class="selector-row-label">Direction</div>
+    <div class="selector-row">
+      <span class="sel-btn">Inbound</span>
+      <span class="sel-btn">Outbound</span>
+      <span class="sel-btn active">All</span>
+    </div>
+    <div class="selector-row-label">Routes</div>
+    <div class="selector-row">
+      <span class="sel-btn active">All</span>
+      <span class="sel-btn">Core <span class="caret">▾</span></span>
+      <span class="sel-btn">Major <span class="caret">▾</span></span>
+      <span class="sel-btn">Minor <span class="caret">▾</span></span>
+      <span class="sel-btn">Commuter <span class="caret">▾</span></span>
+      <span class="sel-btn">Express <span class="caret">▾</span></span>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Data Mapping Required</div>
+    <p>The GTFS <code>routes.txt</code> does not include a "category" field (Core/Major/Minor/etc.). This classification must be maintained as a <strong>separate lookup table</strong> within the application, manually mapped from Metro's published route classifications. This table needs updating when Metro changes service (at least quarterly).</p>
+  </div>
+
+  <h3 id="map-display">5.2 Map Display</h3>
+  <p>The primary display is an interactive map showing:</p>
+  <ul>
+    <li><strong>Route lines:</strong> Rendered from GTFS <code>shapes.txt</code> polylines, color-coded per route</li>
+    <li><strong>Stop markers:</strong> Small dots at each stop along selected routes</li>
+    <li><strong>Bus icons:</strong> Positioned at real-time GPS coordinates from the GTFS-RT feed</li>
+    <li><strong>Pan/zoom:</strong> Standard map interaction; defaults to full Metro service area</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Performance Concern</div>
+    <p>When "All" routes are selected: ~50 routes, 3,700+ stops, and potentially 100+ active buses must render simultaneously without frame drops. Mitigations: cluster stops at low zoom levels, simplify route polylines, use canvas rendering over SVG for markers, lazy-load off-screen route geometry.</p>
+  </div>
+
+  <h3 id="bus-icon">5.3 Bus Icon Design</h3>
+  <p>The bus icon is a <strong>directional pentagon</strong>: a rectangle with one end tapering to a triangular point indicating direction of travel.</p>
+
+  <h4>Shape Specification</h4>
+  <ul>
+    <li><strong>Base shape:</strong> Rectangle ~40×20px (scalable)</li>
+    <li><strong>Directional indicator:</strong> One short side extends to a triangular point</li>
+    <li><strong>Orientation:</strong> Pointed end faces direction of travel (from GTFS-RT <code>bearing</code> field)</li>
+    <li><strong>Interior text:</strong> Route number (and variant suffix if applicable)</li>
+    <li><strong>Background color:</strong> Route's assigned color</li>
+    <li><strong>Text color:</strong> White or dark, auto-selected for contrast</li>
+  </ul>
+
+  <h4>Icon Examples</h4>
+  <div class="icon-demo">
+    <div style="text-align:center">
+      <div class="bus-icon rt4">4</div>
+      <div class="bus-icon-label">Standard</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt4">4-A</div>
+      <div class="bus-icon-label">Amberly trip</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt4">4-EA</div>
+      <div class="bus-icon-label">Evanston Acad.</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt43">43-E</div>
+      <div class="bus-icon-label">Evendale branch</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt43">43-S</div>
+      <div class="bus-icon-label">Sharonville</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt43">43-R</div>
+      <div class="bus-icon-label">Roselawn spl.</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt41">41-AHS</div>
+      <div class="bus-icon-label">Aiken HS trip</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bus-icon rt17">17</div>
+      <div class="bus-icon-label">Standard</div>
+    </div>
+  </div>
+
+  <h4>5.3.1 Special Trip Labeling</h4>
+  <p>Some routes have variant trips (school specials, branch terminations) that need visual distinction. The icon interior uses a <strong>route-suffix notation</strong>:</p>
+  <table>
+    <thead><tr><th>Label</th><th>Meaning</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><code>4-A</code></td><td>Route 4 Amberly special</td><td>Afternoon school trip via Amberly</td></tr>
+      <tr><td><code>4-EA</code></td><td>Route 4 Evanston Academy</td><td>Afternoon school trip to Evanston Academy</td></tr>
+      <tr><td><code>43-E</code></td><td>Route 43 Evendale branch</td><td>Terminates at Evendale</td></tr>
+      <tr><td><code>43-S</code></td><td>Route 43 Sharonville branch</td><td>Terminates at Sharonville</td></tr>
+      <tr><td><code>43-R</code></td><td>Route 43 Roselawn special</td><td>Special Roselawn routing</td></tr>
+      <tr><td><code>41-A</code> / <code>41-AHS</code></td><td>Route 41 Aiken HS trip</td><td>Suffix abbreviates destination (not standardized)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Data Mapping Required</div>
+    <p>The suffix labels are <strong>not standard GTFS fields</strong>. They must be derived from either: (a) pattern-matching on <code>trip_headsign</code>, (b) a manually maintained lookup table mapping trip_id patterns to suffix labels, or (c) stop-sequence analysis detecting terminal stop deviations. Option (b) is most reliable but requires quarterly maintenance. This is the single most maintenance-intensive part of the application.</p>
+  </div>
+
+  <h3 id="realtime">5.4 Real-Time Data Refresh</h3>
+  <p>The application polls the GTFS-RT feed at a configurable interval. Recommended default: <strong>15–30 seconds</strong>.</p>
+  <ul>
+    <li>Backend parses protobuf using <code>gtfs-realtime-bindings</code> library</li>
+    <li>Vehicle positions include: lat, lon, bearing/heading, speed, trip_id, vehicle_id, timestamp</li>
+    <li>Stale data (timestamp &gt; 5 min old) should be <strong>visually dimmed or hidden</strong></li>
+    <li>Smooth animation between poll intervals (interpolate position along route shape) is Phase 2</li>
+  </ul>
+
+  <h3 id="info-panel">5.5 Information Panel <span class="phase-tag phase-2">Phase 2</span></h3>
+  <p>Clicking a bus icon displays a popover with:</p>
+  <ul>
+    <li>Route number and headsign (destination)</li>
+    <li>Current speed</li>
+    <li>Next stop and estimated arrival</li>
+    <li>Trip variant label (if applicable)</li>
+    <li>Last position update timestamp</li>
+  </ul>
+  <p>Vehicle ID (bus number) is available in the feed but explicitly deprioritized.</p>
+
+  <!-- ══════════ 6. NON-FUNCTIONAL ══════════ -->
+  <h2 id="nonfunctional">6. Non-Functional Requirements</h2>
+  <table>
+    <thead><tr><th>Requirement</th><th>Target</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Initial Load</td><td>&lt; 3 seconds</td><td>Route geometry can be cached aggressively</td></tr>
+      <tr><td>Map Interaction</td><td>60fps pan/zoom</td><td>Canvas rendering, stop clustering at low zoom</td></tr>
+      <tr><td>Data Freshness</td><td>15–30 sec refresh</td><td>Configurable; respect GTFS-RT server load</td></tr>
+      <tr><td>Browser Support</td><td>Chrome, Firefox, Safari, Edge (current)</td><td>Mobile-responsive but desktop-primary</td></tr>
+      <tr><td>Hosting</td><td>Static frontend + lightweight backend</td><td>Backend for protobuf parsing + CORS proxy</td></tr>
+      <tr><td>Availability</td><td>Best-effort</td><td>Entirely dependent on Metro feed uptime</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ 7. ARCHITECTURE ══════════ -->
+  <h2 id="architecture">7. Technical Architecture</h2>
+
+  <h3>7.1 Recommended Stack</h3>
+  <table>
+    <thead><tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>React + Leaflet (react-leaflet) or Mapbox GL JS</td><td>Leaflet is free &amp; sufficient; Mapbox better perf but needs API key</td></tr>
+      <tr><td>Backend / API</td><td>Python (FastAPI) or Node.js (Express)</td><td>Parses GTFS-RT protobuf, serves JSON, caches route geometry</td></tr>
+      <tr><td>GTFS-RT Parsing</td><td><code>gtfs-realtime-bindings</code></td><td>Official Google-maintained protobuf bindings (Python &amp; Node)</td></tr>
+      <tr><td>GTFS Static Processing</td><td>Python script (one-time + quarterly)</td><td>Processes routes/stops/shapes into frontend-consumable JSON</td></tr>
+      <tr><td>Hosting</td><td>Fly.io, Railway, or Render</td><td>Low-cost, supports polling architecture</td></tr>
+      <tr><td>Map Tiles</td><td>OpenStreetMap (free) or Mapbox</td><td>OSM is free, no API key; Mapbox has free tier</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 Data Flow</h3>
+  <ol>
+    <li>Backend polls Metro GTFS-RT feed every 15–30 seconds</li>
+    <li>Backend parses protobuf, extracts vehicle positions, matches to routes/trips via GTFS static data</li>
+    <li>Backend serves parsed positions as JSON via REST endpoint (or WebSocket for push)</li>
+    <li>Frontend fetches positions, matches to route shapes, renders bus icons on map</li>
+    <li>GTFS static data (route geometry, stops) is preprocessed into static JSON, cached client-side</li>
+  </ol>
+
+  <div class="callout callout-info">
+    <div class="callout-label">Why a backend proxy?</div>
+    <p>Parsing protobuf directly in the browser is possible but adds bundle size and exposes the feed URL. A thin backend also enables route category mapping, trip variant labels, data enrichment, and CORS handling — all server-side.</p>
+  </div>
+
+  <!-- ══════════ 8. CLASSIFICATION ══════════ -->
+  <h2 id="classification">8. Route Classification Reference</h2>
+  <p>Metro classifies routes into service tiers. This mapping must be maintained as a <strong>configuration file</strong> (not hardcoded) and validated against Metro's current published schedules quarterly.</p>
+  <table>
+    <thead><tr><th>Category</th><th>Characteristics</th><th>Maintenance Trigger</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Core</strong></td><td>Highest frequency, 7-day service, primary corridors</td><td>Rarely changes</td></tr>
+      <tr><td><strong>Major</strong></td><td>Moderate frequency, broad coverage</td><td>Quarterly review</td></tr>
+      <tr><td><strong>Minor</strong></td><td>Lower frequency or limited span</td><td>Quarterly review</td></tr>
+      <tr><td><strong>Commuter</strong></td><td>Peak-direction, peak-period only</td><td>Seasonal schedule changes</td></tr>
+      <tr><td><strong>Express</strong></td><td>Limited-stop, longer distance</td><td>Seasonal schedule changes</td></tr>
+    </tbody>
+  </table>
+  <p>Source for initial mapping: Metro's published schedule booklet and the route listings on <code>go-metro.com/riding-metro/fixed-route-schedules/</code>. The GTFS feed does not include this classification.</p>
+
+  <!-- ══════════ 9. VARIANTS ══════════ -->
+  <h2 id="variants">9. Trip Variant Labeling Logic</h2>
+  <p>The suffix-based trip labeling system (e.g., <code>4-A</code>, <code>43-S</code>) requires a mapping between GTFS trip patterns and display labels. This is the most maintenance-intensive component.</p>
+
+  <h3>9.1 Approach Comparison</h3>
+  <table>
+    <thead><tr><th>Approach</th><th>Pros</th><th>Cons</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Manual lookup table</strong><br>(trip_id pattern → suffix)</td>
+        <td>Most accurate, full control</td>
+        <td>Requires update every schedule change; brittle if trip_id format changes</td>
+      </tr>
+      <tr>
+        <td><strong>Headsign parsing</strong><br>(regex on trip_headsign)</td>
+        <td>Adapts automatically to new GTFS data</td>
+        <td>Headsign text may be inconsistent; may miss edge cases</td>
+      </tr>
+      <tr>
+        <td><strong>Stop-sequence analysis</strong><br>(detect branch by terminal stop)</td>
+        <td>Structural, not text-dependent</td>
+        <td>Complex to implement; can't distinguish school specials from regular branches</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <div class="callout-label">Recommendation</div>
+    <p>Start with a <strong>manual lookup table</strong> for MVP. The variant trips are a known, finite set. Invest in automated detection only if quarterly maintenance becomes unsustainable. Consider a hybrid: use headsign parsing as the default, with manual overrides for known edge cases.</p>
+  </div>
+
+  <!-- ══════════ 10. PHASING ══════════ -->
+  <h2 id="phasing">10. Phasing</h2>
+
+  <h3>Phase 1 — MVP <span class="phase-tag phase-mvp">MVP</span></h3>
+  <ul>
+    <li>Map display with route lines and bus position icons</li>
+    <li>Direction selector (Inbound / Outbound / All)</li>
+    <li>Route category selector with multi-select dropdowns</li>
+    <li>Directional pentagon bus icons with route number</li>
+    <li>15–30 second auto-refresh of bus positions</li>
+    <li>Stale data indicator (dim buses with old timestamps)</li>
+    <li>Stop dots along route lines</li>
+    <li>Mobile-responsive layout (desktop-primary)</li>
+  </ul>
+
+  <h3>Phase 2 — Enhancements <span class="phase-tag phase-2">Phase 2</span></h3>
+  <ul>
+    <li>Click-to-inspect bus popover (headsign, speed, next stop, ETA)</li>
+    <li>Trip variant suffix labels (<code>4-A</code>, <code>43-S</code>, etc.)</li>
+    <li>Smooth position animation between poll intervals</li>
+    <li>Service alerts overlay (from GTFS-RT alerts feed)</li>
+    <li>URL-based state sharing (<code>?routes=4,43&dir=all</code>)</li>
+    <li>Dark mode</li>
+  </ul>
+
+  <h3>Phase 3 — Aspirational <span class="phase-tag phase-3">Phase 3</span></h3>
+  <ul>
+    <li>Historical playback (record positions, replay a day's service)</li>
+    <li>On-time performance heatmap by route segment</li>
+    <li>User-defined route groups ("my commute" presets)</li>
+    <li>Push notifications for specific arrivals (requires accounts)</li>
+    <li>PWA support for home-screen install</li>
+  </ul>
+
+  <!-- ══════════ 11. RISKS ══════════ -->
+  <h2 id="risks">11. Risks &amp; Mitigations</h2>
+  <table>
+    <thead><tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Metro kills GTFS-RT feed</td>
+        <td><span class="risk-high">Project-ending</span></td>
+        <td><span class="risk-low">Low</span> (Google Maps, Transit App depend on it)</td>
+        <td>Monitor feed; no technical workaround possible</td>
+      </tr>
+      <tr>
+        <td>Metro changes feed URL</td>
+        <td>Temporary outage</td>
+        <td><span class="risk-medium">Medium</span></td>
+        <td>Health check on polling; alert on consecutive failures</td>
+      </tr>
+      <tr>
+        <td>Route category mapping goes stale</td>
+        <td>Display inaccuracy</td>
+        <td><span class="risk-high">High</span> (quarterly changes)</td>
+        <td>Schedule quarterly review; build admin tool to update</td>
+      </tr>
+      <tr>
+        <td>Trip variant labels break</td>
+        <td>Incorrect suffixes</td>
+        <td><span class="risk-high">High</span></td>
+        <td>Manual table review each schedule period</td>
+      </tr>
+      <tr>
+        <td>Perf under full-system load</td>
+        <td>Janky map UX</td>
+        <td><span class="risk-medium">Medium</span></td>
+        <td>Canvas rendering, clustering, polyline simplification</td>
+      </tr>
+      <tr>
+        <td>CORS restrictions on feed</td>
+        <td>Frontend blocked</td>
+        <td><span class="risk-high">High</span> (expected for .pb feeds)</td>
+        <td>Backend proxy (already in architecture)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ 12. OPEN QUESTIONS ══════════ -->
+  <h2 id="open-questions">12. Open Questions for Resolution</h2>
+  <p>These must be answered before development begins. Items marked <strong>blocking</strong> prevent any work from starting.</p>
+  <ol>
+    <li><strong>BLOCKING:</strong> Is the GTFS-RT feed currently accessible without an API key or authentication? Hit the endpoint and confirm a valid protobuf response.</li>
+    <li><strong>BLOCKING:</strong> Does the GTFS-RT feed include vehicle <code>bearing</code>/<code>heading</code>? Required for directional icon rotation. If absent, direction must be inferred from sequential position deltas.</li>
+    <li>What is the actual update frequency of the GTFS-RT feed? (Determines minimum useful poll interval.)</li>
+    <li>Does Metro's GTFS data include <code>route_color</code> values, or must colors be assigned manually?</li>
+    <li>How are school special trips represented in the GTFS data? (Separate <code>trip_id</code>s? Different <code>service_id</code>? Different <code>trip_headsign</code>?)</li>
+    <li>Is there a rate limit or usage policy on the GTFS-RT endpoint? Metro's developer page doesn't specify one, but aggressive polling could trigger blocking.</li>
+    <li>What is the project name? "CincyBusTrackr" is a placeholder — needs to be finalized before any public-facing work.</li>
+    <li>Domain and hosting budget? Even minimal hosting (Fly.io, Render) has a cost floor for the always-on backend proxy.</li>
+  </ol>
+
+  <div class="callout callout-critical">
+    <div class="callout-label">Recommended First Step</div>
+    <p>Before any design or development work: write a 20-line Python script that fetches the GTFS-RT feed, parses it, and prints vehicle positions. This validates the entire data pipeline in under an hour and answers questions 1, 2, 3, and partially 5 above. If this script fails, the project needs a different data strategy.</p>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CincyBusTrackr — Project Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1419;
+    --ink-soft: #3d4752;
+    --ink-muted: #6e7a86;
+    --accent: #0057b8;
+    --accent-dark: #003d82;
+    --accent-light: #e6f0fa;
+    --danger: #c0392b;
+    --surface: #ffffff;
+    --surface-alt: #f7f8fa;
+    --border: #e1e5ea;
+    --border-strong: #c8ced6;
+    --success: #1a7a4c;
+    --success-bg: #eaf5ef;
+    --warning: #b8860b;
+    --warning-bg: #fdf8ec;
+    --purple: #553c7a;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+    --serif: 'Playfair Display', Georgia, serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--surface);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0;
+    width: 248px; height: 100vh;
+    background: var(--ink); color: #fff;
+    overflow-y: auto; padding: 2rem 0; z-index: 100;
+    font-size: 0.8rem;
+  }
+  nav .nav-brand { padding: 0 1.4rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.75rem; }
+  nav .nav-brand h2 { font-family: var(--serif); font-size: 1.15rem; font-weight: 800; }
+  nav .nav-brand span { display: block; font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+  nav ol { list-style: none; padding: 0 0.75rem; }
+  nav ol li a { display: block; padding: 0.35rem 0.5rem; color: rgba(255,255,255,0.6); text-decoration: none; border-radius: 4px; transition: all 0.12s; }
+  nav ol li a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  nav ol li.section-head > a { color: rgba(255,255,255,0.88); font-weight: 700; margin-top: 0.5rem; }
+  nav ol li.sub > a { padding-left: 1rem; font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+  nav ol li.sub > a:hover { color: rgba(255,255,255,0.85); }
+
+  .nav-progress {
+    padding: 0.75rem 1.4rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 1rem;
+  }
+  .nav-progress-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem; }
+  .progress-bar { height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #4ade80; border-radius: 2px; transition: width 0.4s ease; }
+  .progress-text { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 0.35rem; }
+
+  /* ── MAIN ── */
+  main { margin-left: 248px; max-width: 860px; padding: 2.5rem 3rem 6rem; }
+
+  /* ── COVER ── */
+  .cover { padding: 3rem 0 2.5rem; border-bottom: 3px solid var(--ink); margin-bottom: 2.5rem; }
+  .cover .badge-row { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .badge { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; padding: 0.22rem 0.65rem; border-radius: 3px; }
+  .badge-live  { background: var(--success-bg); color: var(--success); border: 1px solid #b6dfc9; }
+  .badge-draft { background: #fdf2f1; color: var(--danger); border: 1px solid #f5c6c2; }
+  .badge-planning { background: var(--accent-light); color: var(--accent-dark); border: 1px solid #b8d4f0; }
+  .cover h1 { font-family: var(--serif); font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.4rem; }
+  .cover .subtitle { font-size: 1.05rem; color: var(--ink-soft); margin-bottom: 1.75rem; }
+  .cover .meta { display: flex; gap: 2rem; font-size: 0.82rem; color: var(--ink-muted); flex-wrap: wrap; }
+  .cover .meta strong { color: var(--ink-soft); }
+
+  /* ── TYPOGRAPHY ── */
+  h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin: 3rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--accent-dark); margin: 1.75rem 0 0.65rem; }
+  h4 { font-size: 0.88rem; font-weight: 700; color: var(--ink-soft); margin: 1.25rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  p { margin-bottom: 0.9rem; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: var(--mono); font-size: 0.83em; background: var(--surface-alt); border: 1px solid var(--border); padding: 0.12em 0.38em; border-radius: 3px; }
+  ul, ol { margin: 0 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+
+  /* ── STATUS DASHBOARD ── */
+  .dashboard { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.85rem; margin: 1.25rem 0 2rem; }
+  .stat-card { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.1rem; }
+  .stat-card .stat-value { font-family: var(--mono); font-size: 1.6rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
+  .stat-card .stat-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-top: 0.2rem; }
+  .stat-card .stat-sub { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.25rem; }
+  .stat-card.good { border-color: #b6dfc9; background: var(--success-bg); }
+  .stat-card.good .stat-value { color: var(--success); }
+  .stat-card.warn { border-color: #e8d5a0; background: var(--warning-bg); }
+  .stat-card.warn .stat-value { color: var(--warning); }
+  .stat-card.info { border-color: #b8d4f0; background: var(--accent-light); }
+  .stat-card.info .stat-value { color: var(--accent); }
+
+  /* ── CALLOUTS ── */
+  .callout { border-left: 4px solid; padding: 0.9rem 1.1rem; margin: 1.1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+  .callout-critical { border-color: var(--danger); background: #fdf2f1; }
+  .callout-critical .callout-label { color: var(--danger); }
+  .callout-info { border-color: var(--accent); background: var(--accent-light); }
+  .callout-info .callout-label { color: var(--accent); }
+  .callout-warning { border-color: var(--warning); background: var(--warning-bg); }
+  .callout-warning .callout-label { color: var(--warning); }
+  .callout-success { border-color: var(--success); background: var(--success-bg); }
+  .callout-success .callout-label { color: var(--success); }
+  .callout-label { font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.87rem; }
+  thead th { background: var(--ink); color: #fff; font-weight: 600; text-align: left; padding: 0.55rem 0.8rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  thead th:first-child { border-radius: 6px 0 0 0; }
+  thead th:last-child { border-radius: 0 6px 0 0; }
+  tbody td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:nth-child(even) { background: var(--surface-alt); }
+
+  /* ── TASK LISTS ── */
+  .task-section { margin: 1.25rem 0; }
+  .task-group { margin-bottom: 1.5rem; }
+  .task-group-header { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  .task-item { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.5rem 0.65rem; border-radius: 6px; cursor: pointer; transition: background 0.1s; user-select: none; border: 1px solid transparent; margin-bottom: 0.25rem; }
+  .task-item:hover { background: var(--surface-alt); border-color: var(--border); }
+  .task-item input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px; accent-color: var(--accent); cursor: pointer; }
+  .task-item.done { opacity: 0.6; }
+  .task-item.done .task-text { text-decoration: line-through; color: var(--ink-muted); }
+  .task-item.done .task-text strong { font-weight: 400; }
+  .task-text { flex: 1; font-size: 0.88rem; line-height: 1.5; }
+  .task-text strong { font-weight: 600; }
+  .task-text .task-note { display: block; font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.1rem; }
+  .task-meta { display: flex; gap: 0.4rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── PHASE TAGS ── */
+  .phase-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.18rem 0.45rem; border-radius: 3px; vertical-align: middle; }
+  .phase-mvp  { background: #d4edda; color: #155724; }
+  .phase-2    { background: #cce5ff; color: #004085; }
+  .phase-3    { background: #f3e8ff; color: var(--purple); }
+  .tag-blocking { background: #fdf2f1; color: var(--danger); border: 1px solid #f5c6c2; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.4rem; border-radius: 3px; }
+  .tag-done    { background: var(--success-bg); color: var(--success); border: 1px solid #b6dfc9; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.4rem; border-radius: 3px; }
+  .tag-open    { background: var(--warning-bg); color: var(--warning); border: 1px solid #e8d5a0; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.4rem; border-radius: 3px; }
+
+  /* ── FACT TABLE ── */
+  .fact-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.87rem; }
+  .fact-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .fact-table td:first-child { font-weight: 600; white-space: nowrap; width: 38%; color: var(--ink-soft); }
+  .fact-table tr:nth-child(even) td { background: var(--surface-alt); }
+  .check { color: var(--success); font-weight: 700; }
+  .cross { color: var(--danger); font-weight: 700; }
+
+  /* ── DECISION LOG ── */
+  .decision { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.85rem; }
+  .decision-header { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.3rem; }
+  .decision-title { font-weight: 700; font-size: 0.92rem; }
+  .decision-date { font-size: 0.72rem; color: var(--ink-muted); white-space: nowrap; font-family: var(--mono); }
+  .decision-body { font-size: 0.84rem; color: var(--ink-soft); }
+  .decision-body strong { color: var(--ink); }
+  .decision.open { border-color: #e8d5a0; background: var(--warning-bg); }
+
+  /* ── SESSION LOG ── */
+  .session { border-left: 3px solid var(--border-strong); padding: 0 0 1.25rem 1.25rem; margin-bottom: 0.25rem; position: relative; }
+  .session::before { content: ''; position: absolute; left: -6px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); border: 2px solid var(--surface); }
+  .session.current::before { background: var(--success); }
+  .session-date { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-muted); margin-bottom: 0.35rem; }
+  .session-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+  .session-body { font-size: 0.84rem; color: var(--ink-soft); }
+  .session-body ul { margin: 0.35rem 0 0 1.25rem; }
+  .session-body li { margin-bottom: 0.2rem; }
+
+  /* ── RISK ── */
+  .risk-high   { color: var(--danger); font-weight: 700; }
+  .risk-medium { color: var(--warning); font-weight: 700; }
+  .risk-low    { color: var(--success); font-weight: 700; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-intro { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.25rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main { margin-left: 0; padding: 1.5rem 1.25rem 4rem; }
+    .cover h1 { font-size: 1.9rem; }
+    .dashboard { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media print {
+    nav { display: none; }
+    main { margin-left: 0; max-width: none; }
+    .task-item { break-inside: avoid; }
+    table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="nav-brand">
+    <h2>CincyBusTrackr</h2>
+    <span>Project Roadmap</span>
+  </div>
+  <ol>
+    <li class="section-head"><a href="#status">Status Dashboard</a></li>
+    <li class="section-head"><a href="#session-log">Session Log</a></li>
+    <li class="section-head"><a href="#validated-facts">Validated Facts</a></li>
+    <li class="section-head"><a href="#decisions">Decision Register</a></li>
+    <li class="section-head"><a href="#phase1">Phase 1 — MVP</a></li>
+    <li class="sub"><a href="#p1-backend">Backend Proxy</a></li>
+    <li class="sub"><a href="#p1-gtfs">GTFS Processing</a></li>
+    <li class="sub"><a href="#p1-frontend">Frontend / Map</a></li>
+    <li class="sub"><a href="#p1-selector">Route Selector</a></li>
+    <li class="sub"><a href="#p1-deploy">Deployment</a></li>
+    <li class="section-head"><a href="#phase2">Phase 2 — Enhancements</a></li>
+    <li class="section-head"><a href="#phase3">Phase 3 — Aspirational</a></li>
+    <li class="section-head"><a href="#open-questions">Open Questions</a></li>
+    <li class="section-head"><a href="#maintenance">Maintenance Guide</a></li>
+    <li class="section-head"><a href="#risks">Risk Register</a></li>
+    <li class="section-head"><a href="#reference">Quick Reference</a></li>
+  </ol>
+  <div class="nav-progress">
+    <div class="nav-progress-label">MVP Progress</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-text" id="progress-text">0 / 0 tasks</div>
+  </div>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="badge-row">
+      <span class="badge badge-live">In Development</span>
+      <span class="badge badge-live">Feed Validated ✓</span>
+    </div>
+    <h1>CincyBusTrackr</h1>
+    <p class="subtitle">Real-Time Cincinnati Metro Bus Tracker — Project Roadmap &amp; Progress Tracker</p>
+    <div class="meta">
+      <div><strong>Started:</strong> May 11, 2026</div>
+      <div><strong>Current Phase:</strong> Phase 2 — Complete locally · Phase 3 planning</div>
+      <div><strong>Next Action:</strong> Deploy — swap OSM tiles for CDN-backed provider, Railway backend, Vercel frontend</div>
+      <div><strong>GTFS Feed Expires:</strong> <span style="color:var(--warning);font-weight:600">May 30, 2026</span></div>
+    </div>
+  </div>
+
+  <!-- ══════════ STATUS DASHBOARD ══════════ -->
+  <h2 id="status">Status Dashboard</h2>
+  <p class="section-intro">Live facts confirmed as of May 11, 2026 by running <code>validate_feed.py</code>. Re-run after each GTFS static feed refresh.</p>
+
+  <div class="dashboard">
+    <div class="stat-card good">
+      <div class="stat-value">HTTP 200</div>
+      <div class="stat-label">Feed Status</div>
+      <div class="stat-sub">No auth required</div>
+    </div>
+    <div class="stat-card info">
+      <div class="stat-value">30s</div>
+      <div class="stat-label">Feed Cadence</div>
+      <div class="stat-sub">Confirmed by timestamp delta</div>
+    </div>
+    <div class="stat-card info">
+      <div class="stat-value">160</div>
+      <div class="stat-label">Active Vehicles</div>
+      <div class="stat-sub">Evening weekday, May 11</div>
+    </div>
+    <div class="stat-card info">
+      <div class="stat-value">41 / 50</div>
+      <div class="stat-label">Active Routes</div>
+      <div class="stat-sub">At time of validation</div>
+    </div>
+    <div class="stat-card good">
+      <div class="stat-value">82%</div>
+      <div class="stat-label">Vehicles w/ Bearing</div>
+      <div class="stat-sub">18% need position-delta fallback</div>
+    </div>
+    <div class="stat-card good">
+      <div class="stat-value">50 / 50</div>
+      <div class="stat-label">Routes w/ Color</div>
+      <div class="stat-sub">route_color in GTFS ✓</div>
+    </div>
+    <div class="stat-card warn">
+      <div class="stat-value">May 30</div>
+      <div class="stat-label">GTFS Expires</div>
+      <div class="stat-sub">New static feed due ~June 1</div>
+    </div>
+    <div class="stat-card info">
+      <div class="stat-value">6,435</div>
+      <div class="stat-label">Trips in Static Feed</div>
+      <div class="stat-sub">trip_headsign present on all</div>
+    </div>
+  </div>
+
+  <!-- ══════════ SESSION LOG ══════════ -->
+  <h2 id="session-log">Session Log</h2>
+  <p class="section-intro">Add a new entry at the top each session. Capture what was done, what was decided, and where to resume. This is the most important section for continuity between sessions.</p>
+
+  <div class="session current">
+    <div class="session-date">2026-05-11 — Session 7</div>
+    <div class="session-title">UI Polish — Inter Font, Teardrop Icons, Glassmorphism, Panel Collapse</div>
+    <div class="session-body">
+      <ul>
+        <li><strong>Inter font:</strong> Added Google Fonts preconnect + link in <code>index.html</code>. Switched body font to Inter with <code>font-feature-settings: "cv11"</code>. Updated all component font-family stacks to match.</li>
+        <li><strong>Brand header:</strong> Blue <code>#0057b8</code> header band added to top of RouteSelector panel — includes CincyBusTrackr label and teardrop bus icon. Collapse button <code>‹</code> sits in the header; a separate blue reopen button appears at the same position when the panel is collapsed (desktop only).</li>
+        <li><strong>Glassmorphism status/alerts bars:</strong> <code>backdrop-filter: blur(10px) saturate(160%)</code> on StatusBar and AlertsBar. Status bar background and border-top color now reflect feed health state — green (ok), amber (degraded), red (down).</li>
+        <li><strong>Teardrop bus icons:</strong> Replaced the pentagon shape with an SVG teardrop/pin: <code>M18,3 C12,9 6,13 6,22 A12,12 0 0 0 30,22 C30,13 12,9 18,3 Z</code>. Two bugs discovered and fixed during development: (1) SVG <code>sweep=1</code> from the left side of a circle draws the <em>top</em> semicircle — needed <code>sweep=0</code> for the bottom arc; (2) first attempt had both bezier curves arriving at the tip with the same tangent direction, causing the path to fold over itself. Fixed by using reflected control points (<code>12,9</code>) to achieve G1 tangent continuity at the tip. CSS <code>filter: drop-shadow()</code> applied at element level (not SVG filter) to avoid ID collisions across hundreds of simultaneous inline SVGs.</li>
+        <li><strong>Adaptive label font size:</strong> Bus icon text uses <code>fontSize = label.length &gt; 2 ? 8 : 10</code> so wider labels like <code>4-A</code> fit without overflow.</li>
+        <li><strong>Dark mode toggle relocation:</strong> Moved from StatusBar to a MapLibre-style control button at <code>top: 110px; right: 10px</code> — visually consistent with the MapLibre zoom controls. Removed <code>darkMode</code> and <code>onDarkModeToggle</code> props from StatusBar entirely.</li>
+        <li><strong>Popup redesign:</strong> Colored header band using the route's own <code>route_color</code> with auto-contrast text. Route label and headsign in the header; speed/stop/ETA rows in a white body section. MapLibre's default popup padding reset to zero via <code>!important</code> overrides in <code>index.css</code>; close button resized and repositioned to sit inside the colored header.</li>
+        <li><strong>Panel collapse:</strong> Desktop panel animates out via <code>transform: translateX(calc(-100% - 24px))</code> with <code>opacity: 0; pointer-events: none</code>. Mobile uses the pre-existing <code>translateY(110%)</code> and ignores the desktop collapsed state.</li>
+        <li><strong>Hover route highlight:</strong> <code>onMouseEnter</code>/<code>onMouseLeave</code> on each category row lifts hovered route IDs to <code>App.tsx</code> via <code>onCategoryHover</code> prop. Map receives <code>hoveredRouteIds</code> and calls <code>setPaintProperty</code> to dim non-hovered routes to 12% opacity / 1.5px width, making the hovered category pop.</li>
+        <li><strong>Stale stop dimming:</strong> When <code>isStale</code> is true, stop dots dim to 20% opacity and clusters to 15% via <code>setPaintProperty</code>, visually reinforcing the stale-data state.</li>
+        <li><strong>Recenter button:</strong> MapLibre-style control at <code>top: 149px; right: 10px</code> flies the map back to the default Cincinnati view (39.095°N, 84.508°W, zoom 11).</li>
+        <li><strong>Route selection counts:</strong> Category rows show <code>&lt;blue&gt;N&lt;/blue&gt;/total</code> when partially selected. Dot uses real <code>route_color</code> from the first route in the category; dims to 30% opacity when the entire category is deselected.</li>
+        <li><strong>Loading skeleton:</strong> While <code>routes.length === 0</code>, five shimmer placeholder rows animate via <code>linear-gradient</code> + <code>background-position</code> keyframes at 1.4s cadence.</li>
+        <li><strong>Disclaimer legibility:</strong> StatusBar disclaimer bumped to <code>font-size: 11px; opacity: 0.65</code> for better readability against the glassmorphism background.</li>
+      </ul>
+      <strong>Stopping point:</strong> All UI polish complete locally. TypeScript build passes clean. Next step is deployment: swap OSM tiles for MapTiler/Stadia (one URL change in <code>Map.tsx</code>), deploy backend to Railway, frontend to Vercel.
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 6</div>
+    <div class="session-title">Phase 2 Complete + Disclaimer</div>
+    <div class="session-body">
+      <ul>
+        <li><strong>Smooth animation (p2-3):</strong> Persistent <code>requestAnimationFrame</code> loop in <code>Map.tsx</code> linearly interpolates every marker's lat/lon/bearing over the full 30-second poll interval. Short-path bearing lerp prevents 360° spinning. SVG text counter-rotation updated each frame so route numbers stay upright regardless of heading.</li>
+        <li><strong>Click-to-inspect popover (p2-1):</strong> Backend now parses <code>trip_update</code> entities from the same GTFS-RT feed to derive next-stop + ETA. <code>stops.txt</code> loaded at startup for stop-name lookup. Clicking a bus icon opens a MapLibre Popup anchored to the animated marker position — shows route, headsign, speed (mph), next stop name, and ETA countdown. Popup refreshes content on every 30 s poll.</li>
+        <li><strong>Trip variant labels (p2-2):</strong> Backend extracts suffix via regex — <code>" - A"</code> pattern → <code>A</code>, <code>Short</code> keyword → <code>S</code>. Bus icons now render <code>4-A</code> / <code>43-S</code> style labels when a variant is detected.</li>
+        <li><strong>Service alerts (p2-4):</strong> New <code>GET /api/alerts</code> endpoint (60 s cache) parses SORTA's <code>alerts.pb</code> feed. <code>AlertsBar</code> component renders a collapsible amber banner above the status strip — hidden when no alerts are active.</li>
+        <li><strong>URL state sharing (p2-5):</strong> Selected routes and direction filter encoded as <code>?routes=4,43&amp;dir=inbound</code>. Params read on mount; URL synced on every change via <code>history.replaceState</code>. No params in URL when all routes are selected (clean default).</li>
+        <li><strong>Dark mode (p2-6):</strong> ☾/☀ toggle in the status bar swaps basemap from OSM to CARTO Dark Matter via <code>map.setStyle()</code>. GeoJSON sources/layers re-added in the <code>style.load</code> callback so the style swap is seamless. Preference persisted in <code>localStorage</code>.</li>
+        <li><strong>SORTA disclaimer (p1-d4):</strong> "Not affiliated with SORTA / Cincinnati Metro" added permanently to the status bar per SORTA open data license terms.</li>
+      </ul>
+      <strong>Stopping point:</strong> All Phase 1 and Phase 2 features complete locally. Deployment deferred. Before production: swap OSM tiles for a CDN-backed provider (MapTiler / Stadia free tier — one URL change in <code>Map.tsx:15</code>). Phase 3 items queued when ready.
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 5</div>
+    <div class="session-title">Browser Testing + Bug Fixes</div>
+    <div class="session-body">
+      <ul>
+        <li><strong>Status bar countdown:</strong> "Updated X ago" always showed "just now" because <code>StatusBar</code> only re-rendered when <code>lastUpdated</code> changed (every 30s). Fixed by adding a 1-second <code>setInterval</code> tick inside <code>StatusBar</code> via <code>useState/useEffect</code> — component now recomputes elapsed time each second.</li>
+        <li><strong>Bus icon rotation not working:</strong> MapLibre overwrites the marker element's <code>transform</code> property on every position update (it sets its own <code>translate()</code> for positioning), silently discarding our <code>rotate()</code>. Fixed by switching to <code>marker.setRotation(bearing)</code> with <code>rotationAlignment: "map"</code> — bearing is now incorporated into MapLibre's own transform string. Removed manual <code>el.style.transform</code> entirely.</li>
+        <li><strong>Route labels unreadable when rotated:</strong> Numbers rotated with the icon body, becoming sideways or upside-down for non-northbound buses. Fixed by counter-rotating the SVG <code>&lt;text&gt;</code> element by <code>-bearing</code> degrees around the label's center point (<code>transform="rotate(-bearing, 18, 23)"</code>), keeping labels upright regardless of icon orientation.</li>
+      </ul>
+      <strong>Stopping point:</strong> All Phase 1 code verified working in browser. Only deployment remains: p1-d2 (Railway backend), p1-d3 (Vercel/Cloudflare frontend), p1-d4 (SORTA disclaimer footer).
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 4</div>
+    <div class="session-title">Direction Filter + Mobile Layout + Trips_BlockName Inspection</div>
+    <div class="session-body">
+      <ul>
+        <li>Scanned all 6,435 trips in <code>trips.txt</code> to map headsign destination labels across all 50 routes</li>
+        <li>Confirmed 36/50 routes have clean inbound/outbound signals via <code>"downtown" in headsign.lower()</code>. 14 cross-town routes (5, 12, 22, 24, 31, 36, 37, 38, 41, 51, 61, 65, 67, 100) have no downtown destination — classified as outbound/cross-town (<code>inbound=False</code>)</li>
+        <li>Also confirmed 410 "dash-format" headsigns (e.g. "Montgomery Rd- Downtown via Walnut Hills") — the keyword check covers these too since "downtown" appears in the string</li>
+        <li>Added <code>inbound: Optional[bool]</code> field to <code>VehiclePosition</code> model; computed in <code>feed.py</code> via <code>_classify_inbound(headsign)</code></li>
+        <li>Added direction toggle (All / Inbound / Outbound) to <code>RouteSelector</code> panel; state lives in <code>App.tsx</code></li>
+        <li>Mobile layout: on ≤640px, RouteSelector becomes a bottom sheet triggered by a floating "Routes" FAB (bottom-right). Sheet slides up with CSS transform transition. Backdrop tap closes sheet. Desktop unchanged.</li>
+        <li><code>Trips_BlockName.txt</code> inspected: purely operator scheduling data (<code>ROUTE - RUN_NUMBER</code>, e.g. "10 - 37"). 789 unique blocks across 6,435 trips. Not useful for passenger-facing features — ignored.</li>
+      </ul>
+      <strong>Stopping point:</strong> All Phase 1 code written. Untested in browser — start next session by opening the app and checking map rendering, direction toggle, and mobile layout before deploying.
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 3</div>
+    <div class="session-title">Bug Fixes + First Live Map</div>
+    <div class="session-body">
+      <ul>
+        <li>Fixed three bugs blocking first render: <code>Map</code> naming collision (<code>maplibregl.Map</code> shadowing built-in <code>Map</code>), <code>setState</code>-during-render crash in <code>App.tsx</code>, and <code>useEffect</code> timing gap where vehicle markers were never added if data arrived before the map <code>load</code> event fired</li>
+        <li>Replaced MapLibre demo tile style (blank green world) with inline OSM raster style — real streets, no API key required</li>
+        <li>Fixed persistent "0 buses active": backend was returning vehicles only after the first async poll tick, which could race against the frontend's first request. Fixed by running an eager <code>await poller._fetch_once()</code> in the FastAPI lifespan before <code>yield</code>, so vehicles are always pre-loaded before the server accepts connections</li>
+        <li>Fixed <code>dev.sh</code>: switched to <code>python3 -m uvicorn</code> for PATH reliability; frontend now waits for backend <code>/api/health</code> to return before starting, eliminating any startup race</li>
+        <li>Switched API calls to relative URLs (<code>""</code> base) so they route through the Vite proxy — no CORS edge cases</li>
+        <li><strong>Status:</strong> Map is live with OSM streets, coloured route lines, bus pentagon icons, stop dots (zoom 13+), and route selector panel. 135 buses visible at end of session.</li>
+      </ul>
+      <strong>Stopping point:</strong> Core map is working end-to-end. Remaining Phase 1 work: direction toggle re-design (p1-s1 needs rethinking — see Decision Register), mobile layout (p1-f7), deployment (p1-d2 through p1-d4), and Trips_BlockName.txt inspection (p1-g3). Start next session by deciding what to do about the direction filter.
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 2</div>
+    <div class="session-title">Phase 1 Implementation — Backend + Frontend Scaffold</div>
+    <div class="session-body">
+      <ul>
+        <li>Scaffolded full FastAPI backend: <code>backend/app/{main,feed,gtfs_static,models}.py</code></li>
+        <li>Background poller fetches GTFS-RT every 30s; caches parsed result server-side</li>
+        <li>Static GTFS loaded at startup: 6,435 trip→headsign entries, 50 routes with colors + categories</li>
+        <li>Bearing fallback implemented: position-delta calculation for ~24% of vehicles (HasField confirmed working with protobuf 6.33.2)</li>
+        <li><strong>Key discovery:</strong> <code>direction_id</code> in this feed uses non-standard Trapeze values (1, 15–19), not GTFS 0/1 binary. direction_id=0 never appears. Stored as-is; direction filter feature needs re-evaluation.</li>
+        <li>Ran <code>scripts/process_gtfs.py</code>: 176k → 14.7k shape points (92% RDP reduction), <code>static/routes.geojson</code> (374KB), <code>static/stops.geojson</code> (576KB)</li>
+        <li>Populated <code>config/route_categories.json</code>: 6 Core, 18 Major, 9 Minor, 9 Commuter, 8 Express</li>
+        <li>Scaffolded React + Vite + TypeScript frontend; installed <code>maplibre-gl</code></li>
+        <li>Wrote <code>Map.tsx</code>, <code>RouteSelector.tsx</code>, <code>StatusBar.tsx</code>; Vite proxies <code>/api/*</code> to FastAPI</li>
+      </ul>
+      <strong>Stopping point:</strong> Backend and frontend scaffold complete but untested in browser.
+    </div>
+  </div>
+
+  <div class="session">
+    <div class="session-date">2026-05-11 — Session 1</div>
+    <div class="session-title">PRD Analysis + Feed Validation</div>
+    <div class="session-body">
+      <ul>
+        <li>Analyzed PRD; identified gaps (MapLibre over Leaflet, backend caching concern, headsign join strategy)</li>
+        <li>Wrote <code>validate_feed.py</code> — validates GTFS-RT feed, static feed, and polls for update cadence</li>
+        <li>Confirmed all blocking questions from PRD resolved (see Validated Facts section)</li>
+        <li>Key surprise: <code>route_color</code> populated for all 50 routes — no manual color work needed</li>
+        <li>Key surprise: headsigns live in static <code>trips.txt</code>, not in RT vehicle positions — must join on <code>trip_id</code></li>
+        <li>GTFS static feed expires May 30 — re-run validation after new feed drops (~June 1)</li>
+      </ul>
+      <strong>Stopping point:</strong> Ready to scaffold FastAPI backend proxy. Start there next session.
+    </div>
+  </div>
+
+  <!-- placeholder for future sessions -->
+  <div style="border-left:3px dashed var(--border);padding:0.75rem 1.25rem;color:var(--ink-muted);font-size:0.84rem;margin-top:0.5rem;">
+    Future sessions go above this line — newest first.
+  </div>
+
+  <!-- ══════════ VALIDATED FACTS ══════════ -->
+  <h2 id="validated-facts">Validated Facts</h2>
+  <p class="section-intro">Confirmed by running <code>validate_feed.py --all</code> on May 11, 2026. Items marked with a source can be re-verified at any time.</p>
+
+  <h3>GTFS-RT Feed</h3>
+  <table class="fact-table">
+    <tbody>
+      <tr><td>Endpoint URL</td><td><code>https://tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/gtfs-realtime/trapezerealtimefeed.pb</code></td></tr>
+      <tr><td>Authentication required</td><td><span class="check">✓ None</span> — HTTP 200 with no credentials</td></tr>
+      <tr><td>Response size</td><td>~375 KB protobuf</td></tr>
+      <tr><td>Feed refresh cadence</td><td><strong>30 seconds</strong> (exact) — confirmed by feed timestamp delta between two polls</td></tr>
+      <tr><td>Vehicle positions in feed</td><td>~160 (evening weekday) — likely higher during peak hours</td></tr>
+      <tr><td>Trip updates in feed</td><td>~275 — contains next-stop ETAs (useful for Phase 2 info panel)</td></tr>
+      <tr><td>Active routes at test time</td><td>41 of 50</td></tr>
+      <tr><td>Bearing field present</td><td><span class="check">✓ Yes</span> — 82% of vehicles; remaining 18% need position-delta fallback</td></tr>
+      <tr><td>Speed field present</td><td><span class="check">✓ Yes</span> — ~60% of vehicles</td></tr>
+      <tr><td>direction_id in RT feed</td><td><span class="cross">⚠ Non-standard</span> — values observed: 1 (57 vehicles), 15–19 (39 vehicles), absent (49 vehicles). <strong>direction_id=0 never appears.</strong> This feed uses Trapeze-internal coding, not GTFS binary 0/1. Standard inbound/outbound filter is not directly implementable. See Decision Register.</td></tr>
+      <tr><td>trip_headsign in RT vehicle positions</td><td><span class="cross">✗ No</span> — headsigns are in static trips.txt; must join via trip_id at runtime</td></tr>
+      <tr><td>vehicle_id / vehicle_label</td><td><span class="check">✓ Present</span> — deprioritized per PRD</td></tr>
+    </tbody>
+  </table>
+
+  <h3>GTFS Static Feed</h3>
+  <table class="fact-table">
+    <tbody>
+      <tr><td>Static feed URL</td><td><code>https://go-metro.com/uploads/GTFS/google_transit_info.zip</code></td></tr>
+      <tr><td>Feed active period</td><td>2026-03-01 → <strong>2026-05-30</strong> (expires in ~19 days from session 1)</td></tr>
+      <tr><td>Files in zip</td><td>agency.txt, calendar.txt, calendar_dates.txt, fare_attributes.txt, fare_rules.txt, feed_info.txt, routes.txt, shapes.txt, stop_times.txt, stops.txt, trips.txt, Trips_BlockName.txt</td></tr>
+      <tr><td>Total routes</td><td>50</td></tr>
+      <tr><td>route_color field</td><td><span class="check">✓ Populated for all 50 routes</span> — no manual color assignment needed</td></tr>
+      <tr><td>Total trips</td><td>6,435</td></tr>
+      <tr><td>trip_headsign field</td><td><span class="check">✓ Present on all trips</span> — verbose, e.g. "Harrison Avenue to Downtown"</td></tr>
+      <tr><td>Headsign pattern</td><td>"[Origin] to [Destination]" — directional by convention; usable for variant detection via regex</td></tr>
+      <tr><td>Stop count</td><td>3,700+ (per PRD; not re-verified in session 1)</td></tr>
+      <tr><td>Trips_BlockName.txt</td><td>Non-standard file — content unknown; may contain block/run metadata useful for operator view</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Action Required — May 30, 2026</div>
+    <p>The static GTFS feed expires May 30. After Metro publishes the new feed (~June 1), re-run <code>python validate_feed.py --static</code> and update this table. Check that <code>route_color</code> and <code>trip_headsign</code> remain present. Review the route category config file against any new or discontinued routes.</p>
+  </div>
+
+  <!-- ══════════ DECISIONS ══════════ -->
+  <h2 id="decisions">Decision Register</h2>
+  <p class="section-intro">Architectural and product decisions made so far, with rationale. Update when a pending decision is resolved.</p>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Map Renderer: MapLibre GL JS (not Leaflet)</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> Use MapLibre GL JS for the frontend map.<br>
+      <strong>Rationale:</strong> WebGL-based rendering handles 100+ animated markers + 3,700 stop dots + 50 route polylines without frame drops. Leaflet uses SVG by default and would degrade under full-system load. MapLibre is free, open-source, and requires no API key (unlike Mapbox).<br>
+      <strong>Tradeoff:</strong> Slightly steeper learning curve than react-leaflet; bundle size is larger (~300KB vs ~40KB). Worth it for performance headroom.
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Backend Language: Python / FastAPI</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> Use Python + FastAPI for the backend proxy.<br>
+      <strong>Rationale:</strong> The <code>gtfs-realtime-bindings</code> Python library is official and well-maintained. Python also has the best GTFS static processing ecosystem (partridge, gtfs-kit). FastAPI gives async polling, auto-generated OpenAPI docs, and a fast development loop.<br>
+      <strong>Tradeoff:</strong> Node.js would unify the language stack (if frontend is React). Accept the split — the backend is thin enough that language switching cost is low.
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Backend Caches Last Feed Response</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> The backend polls Metro's feed on its own 30-second timer and caches the parsed result. All client requests receive the cached JSON — the backend never fetches from Metro per-client-request.<br>
+      <strong>Rationale:</strong> Prevents hammering the Metro feed under multi-user load. Keeps server-side polling rate constant regardless of client count. A naive per-request fetch could trigger rate limiting or IP blocking.
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Headsign Join Strategy: Static Lookup at Startup</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> On backend startup, load <code>trips.txt</code> from the static GTFS feed into a <code>trip_id → headsign</code> dict in memory. RT vehicle positions carry only <code>trip_id</code>; the backend enriches each vehicle with the headsign from this dict before serving JSON to clients.<br>
+      <strong>Rationale:</strong> RT feed does not include headsigns in vehicle positions. This is the standard GTFS-RT integration pattern. The dict is small (6,435 entries).<br>
+      <strong>Note:</strong> Dict must be refreshed when the static feed is updated (quarterly).
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Route Colors: From GTFS route_color (no manual assignment)</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> Use the <code>route_color</code> hex values from <code>routes.txt</code> directly. All 50 routes have values — no manual color table needed.<br>
+      <strong>Note:</strong> Verify colors are visually distinct when multiple routes overlap on the map. If two routes share a similar color, consider a manual override table for just those routes.
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Map Tiles: OpenStreetMap Raster (inline style, no API key)</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> Use an inline MapLibre style object pointing at <code>tile.openstreetmap.org</code> raster tiles. No external style URL, no API key.<br>
+      <strong>Rationale:</strong> MapLibre's demo style (<code>demotiles.maplibre.org</code>) renders as a plain green world outline — not useful. OSM tiles are free for reasonable/non-commercial use, universally available, and show real streets immediately without registration.<br>
+      <strong>Note for production:</strong> OSM's tile usage policy discourages heavy production traffic directly on their servers. Before launch, switch to a CDN-backed tile provider (MapTiler free tier, Stadia Maps, or self-host with Protomaps). No code changes needed — just swap the tile URL in <code>Map.tsx</code>.
+    </div>
+  </div>
+
+  <div class="decision">
+    <div class="decision-header">
+      <span class="decision-title">Direction Filter: Headsign Keyword ("downtown")</span>
+      <span class="decision-date">2026-05-11</span>
+    </div>
+    <div class="decision-body">
+      <strong>Decision:</strong> Classify <code>inbound=True</code> when <code>"downtown" in headsign.lower()</code>; <code>False</code> when headsign exists but lacks "downtown" (outbound + cross-town routes); <code>None</code> when headsign is unknown.<br>
+      <strong>Rationale:</strong> Scanned all 6,435 trips — 36/50 routes have clean inbound/outbound signals. 14 cross-town routes (5, 12, 22, 24, 31, 36, 37, 38, 41, 51, 61, 65, 67, 100) have no downtown destination and correctly fall into the "Outbound" bucket. The 410 dash-format headsigns (e.g. "Montgomery Rd- Downtown via Walnut Hills") are also covered since "downtown" appears in the string.<br>
+      <strong>Filter logic:</strong> Inbound → <code>inbound===true</code>; Outbound → <code>inbound===false || null</code>; All → everything.
+    </div>
+  </div>
+
+  <div class="decision open">
+    <div class="decision-header">
+      <span class="decision-title">⏳ Hosting Platform — PENDING</span>
+      <span class="decision-date">Open</span>
+    </div>
+    <div class="decision-body">
+      <strong>Options:</strong> Railway (simplest DX), Render (free tier), Fly.io (most control), self-hosted VPS.<br>
+      <strong>Constraint:</strong> Backend must be always-on (polling every 30s). Free-tier services that spin down on inactivity won't work.<br>
+      <strong>Recommendation:</strong> Railway — $5/mo hobby plan, no cold starts, simple deploy from GitHub.
+    </div>
+  </div>
+
+  <div class="decision open">
+    <div class="decision-header">
+      <span class="decision-title">⏳ Final Project Name — PENDING</span>
+      <span class="decision-date">Open</span>
+    </div>
+    <div class="decision-body">
+      "CincyBusTrackr" is the working name. Must be decided before any public-facing work (domain, repo name, social handles). Cannot use "Metro" branding per SORTA license terms.
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 1 — MVP ══════════ -->
+  <h2 id="phase1">Phase 1 — MVP <span class="phase-tag phase-mvp">MVP</span></h2>
+  <p class="section-intro">Everything needed for a working, publicly-usable tracker. Tasks are grouped by component. Check off items as they're completed — progress persists in your browser.</p>
+
+  <div class="task-section">
+
+    <div class="task-group" id="p1-backend">
+      <div class="task-group-header">Backend Proxy (FastAPI)</div>
+
+      <label class="task-item" data-id="p1-b1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Scaffold FastAPI project</strong>
+          <span class="task-note">Create repo, <code>pyproject.toml</code> / <code>requirements.txt</code>, basic app structure. Recommended layout: <code>app/main.py</code>, <code>app/feed.py</code>, <code>app/gtfs_static.py</code>, <code>app/models.py</code>.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Background poller — fetch GTFS-RT every 30s, cache parsed result</strong>
+          <span class="task-note">Use <code>asyncio</code> background task or APScheduler. Store last parse in module-level dict. Never fetch per-client-request. Log consecutive failures (feed health check).</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Parse GTFS-RT protobuf → clean JSON vehicle list</strong>
+          <span class="task-note">Each vehicle: <code>{ vehicle_id, route_id, trip_id, lat, lon, bearing, speed, direction_id, timestamp, stale }</code>. Mark <code>stale=true</code> if timestamp &gt; 5 minutes old.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b4">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Load static GTFS on startup — build trip_id → headsign lookup</strong>
+          <span class="task-note">Download <code>google_transit_info.zip</code>, parse <code>trips.txt</code> in memory. Also load <code>routes.txt</code> for <code>route_color</code> and <code>route_short_name</code>. Refresh on GTFS update.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b5">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Bearing fallback for the 18% of vehicles without bearing</strong>
+          <span class="task-note">Track last known position per vehicle_id. On next update, compute heading from (lat1,lon1) → (lat2,lon2) using atan2. Only apply if distance &gt; ~5m to avoid noise.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b6">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>REST endpoint: <code>GET /api/vehicles</code></strong>
+          <span class="task-note">Returns cached vehicle list as JSON array. Add <code>Cache-Control: no-store</code>. Add CORS headers for the frontend origin. Include feed age in response (<code>feed_timestamp</code>, <code>fetched_at</code>).</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b7">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>REST endpoint: <code>GET /api/routes</code></strong>
+          <span class="task-note">Returns static route metadata: <code>{ route_id, route_short_name, route_long_name, route_color, route_text_color, category }</code>. Cached — served from memory, not re-read on each request.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-b8">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>REST endpoint: <code>GET /api/health</code></strong>
+          <span class="task-note">Returns feed status: last successful fetch time, consecutive failure count, vehicle count. Used for monitoring and stale-feed UI indicator.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+    </div>
+
+    <div class="task-group" id="p1-gtfs">
+      <div class="task-group-header">GTFS Static Processing (one-time + quarterly)</div>
+
+      <label class="task-item" data-id="p1-g1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Write GTFS → GeoJSON processor script</strong>
+          <span class="task-note">Reads <code>shapes.txt</code> → GeoJSON LineString per route. Reads <code>stops.txt</code> → GeoJSON PointCollection. Output to <code>static/routes.geojson</code> and <code>static/stops.geojson</code>. Run quarterly after feed update.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-g2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Create route category config file</strong>
+          <span class="task-note">JSON mapping: <code>{ "route_id": "category" }</code> where category ∈ {Core, Major, Minor, Commuter, Express}. Source: Metro's published schedule booklet at <code>go-metro.com/riding-metro/fixed-route-schedules/</code>. Store in <code>config/route_categories.json</code>.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-g3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Inspect Trips_BlockName.txt — determine if useful</strong>
+          <span class="task-note">Non-standard file in Metro's GTFS zip. May contain block/operator data. Read it, document what's in it, decide if it's useful for trip variant detection. If not, ignore.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-g4">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Simplify route polylines for map performance</strong>
+          <span class="task-note">Apply Ramer-Douglas-Peucker simplification (tolerance ~0.0001°) to shapes. Use <code>shapely</code> or <code>rdp</code> Python library. Reduces GeoJSON size and improves render performance at low zoom.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+    </div>
+
+    <div class="task-group" id="p1-frontend">
+      <div class="task-group-header">Frontend — Map Display</div>
+
+      <label class="task-item" data-id="p1-f1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Scaffold React + Vite frontend</strong>
+          <span class="task-note">Create <code>/frontend</code> directory. Install MapLibre GL JS (<code>maplibre-gl</code>). No UI framework needed for MVP — plain React + CSS modules. TypeScript recommended.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Render route lines on map from GeoJSON</strong>
+          <span class="task-note">Load <code>routes.geojson</code> as a MapLibre source. Add a line layer per route using <code>route_color</code>. Default view: full Metro service area (~39.05°N, 84.50°W, zoom 11). Toggle visibility by route_id when selector changes.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Render stop dots along route lines</strong>
+          <span class="task-note">Load <code>stops.geojson</code> as a MapLibre source. Use a circle layer (radius 3px at zoom 13+). Cluster at zoom &lt;12 to avoid 3,700 overlapping dots. Only show stops for active/selected routes.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f4">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Render directional pentagon bus icons</strong>
+          <span class="task-note">MapLibre custom layer or HTML markers. Icon = route-colored rectangle with triangular point at bearing direction. Route number as interior text. White or dark text (auto-contrast from route_color luminance). Rotate icon to bearing. Stale buses: 50% opacity.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f5">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Poll <code>/api/vehicles</code> every 30s and update map</strong>
+          <span class="task-note">Use <code>setInterval</code> or a custom hook. On each poll, diff vehicle positions vs previous — update markers in place rather than clearing and re-adding. Show "last updated Xs ago" indicator.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f6">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Stale data indicator</strong>
+          <span class="task-note">If backend <code>/api/health</code> reports feed failure, show banner: "Live data unavailable — showing last known positions from Xs ago." Dim all bus icons to 30% opacity.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-f7">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Mobile-responsive layout</strong>
+          <span class="task-note">Desktop-primary. On mobile: route selector collapses to a bottom sheet or floating panel. Map takes full screen. Touch pan/zoom must work smoothly.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+    </div>
+
+    <div class="task-group" id="p1-selector">
+      <div class="task-group-header">Frontend — Route Selector</div>
+
+      <label class="task-item" data-id="p1-s1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Direction toggle (Inbound / Outbound / All)</strong>
+          <span class="task-note"><strong style="color:var(--warning)">⚠ Blocked — direction_id unusable.</strong> Feed uses Trapeze-internal values (1, 15–19); direction_id=0 (outbound) never appears. Recommend dropping from MVP and revisiting in Phase 2 via headsign-based direction detection. See Decision Register.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span><span class="tag-open">Blocked</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-s2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Route category buttons (All / Core / Major / Minor / Commuter / Express)</strong>
+          <span class="task-note">"All" selects every route. Category buttons open multi-select dropdowns. Each dropdown has "Select All [Category]" at top + individual route toggles. Multiple categories can be active simultaneously.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-s3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Wire selector state → map layer visibility</strong>
+          <span class="task-note">When route selection changes, show/hide MapLibre layers for route lines, stops, and bus icons. Use React state or Zustand for selector state. Avoid full re-renders — toggle MapLibre layer visibility directly.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+    </div>
+
+    <div class="task-group" id="p1-deploy">
+      <div class="task-group-header">Deployment</div>
+
+      <label class="task-item" data-id="p1-d1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Containerize backend (Dockerfile)</strong>
+          <span class="task-note">Python 3.12 slim base image. Copy requirements, install deps, run <code>uvicorn app.main:app</code>. Expose port 8000. Health check on <code>/api/health</code>.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-d2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Deploy backend to chosen hosting platform</strong>
+          <span class="task-note">Decision pending (see Decision Register). Must be always-on (no cold-start spin-down). Set env var for poll interval. Test <code>/api/vehicles</code> and <code>/api/health</code> from public URL.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-d3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Deploy frontend (static hosting — Vercel / Netlify / Cloudflare Pages)</strong>
+          <span class="task-note">Frontend is a static Vite build. Point <code>VITE_API_URL</code> env var at the deployed backend. All three platforms have generous free tiers for static sites.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+
+      <label class="task-item" data-id="p1-d4">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Add disclaimer to footer: "Not affiliated with SORTA/Cincinnati Metro"</strong>
+          <span class="task-note">Required per SORTA open data license terms. Do not use Metro logo or "Metro" as a brand name. CincyBusTrackr or project-specific branding only.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-mvp">MVP</span></span>
+      </label>
+    </div>
+
+  </div><!-- /task-section -->
+
+  <!-- ══════════ PHASE 2 ══════════ -->
+  <h2 id="phase2">Phase 2 — Enhancements <span class="phase-tag phase-2">Phase 2</span></h2>
+  <p class="section-intro">Post-MVP improvements. Don't start until Phase 1 is stable in production.</p>
+
+  <div class="task-section">
+    <div class="task-group">
+      <div class="task-group-header">Phase 2 Tasks</div>
+
+      <label class="task-item" data-id="p2-1">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Click-to-inspect bus popover</strong>
+          <span class="task-note">On bus icon click: popover with route number, headsign, current speed, next stop name + ETA (from trip_updates in GTFS-RT), trip variant label, last update timestamp. ETA requires parsing trip_update entities — backend must expose them.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+      <label class="task-item" data-id="p2-2">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Trip variant suffix labels (4-A, 43-S, etc.)</strong>
+          <span class="task-note">Derive from headsign regex as primary method. Maintain manual override table (<code>config/trip_variants.json</code>) for edge cases. Backend enriches vehicle JSON with variant suffix. Frontend shows suffix inside bus icon (e.g. "4-A").</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+      <label class="task-item" data-id="p2-3">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Smooth position animation between 30s poll intervals</strong>
+          <span class="task-note">Interpolate vehicle position linearly between last known and new position over the 30s interval. Snap to new position on each poll. Use <code>requestAnimationFrame</code>. Abort if vehicle disappears from feed.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+      <label class="task-item" data-id="p2-4">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Service alerts overlay</strong>
+          <span class="task-note">Fetch from <code>https://tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/alert/alerts.pb</code>. Show active alerts in a collapsible panel. Highlight affected routes in selector.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+      <label class="task-item" data-id="p2-5">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>URL-based state sharing</strong>
+          <span class="task-note">Encode selector state in URL query params: <code>?routes=4,43&dir=all</code>. Allows bookmarking and sharing a specific view. Use <code>URLSearchParams</code> and <code>history.replaceState</code>.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+      <label class="task-item" data-id="p2-6">
+        <input type="checkbox">
+        <span class="task-text">
+          <strong>Dark mode</strong>
+          <span class="task-note">MapLibre supports dark base map styles (use <code>maptiler://maps/streets-v2-dark</code> or similar free style). Toggle via CSS custom properties. Persist preference in localStorage.</span>
+        </span>
+        <span class="task-meta"><span class="phase-tag phase-2">P2</span></span>
+      </label>
+
+    </div>
+  </div>
+
+  <!-- ══════════ PHASE 3 ══════════ -->
+  <h2 id="phase3">Phase 3 — Aspirational <span class="phase-tag phase-3">Phase 3</span></h2>
+  <p class="section-intro">Long-term ideas. No implementation timeline. Capture here to avoid scope creep into earlier phases.</p>
+  <ul>
+    <li>Historical playback — record vehicle positions to a time-series store, replay a full day of service</li>
+    <li>On-time performance heatmap by route segment (requires schedule adherence calculation from trip_updates)</li>
+    <li>User-defined route groups ("my commute" presets) — requires localStorage or accounts</li>
+    <li>Push notifications for specific arrivals — requires service worker + accounts + backend push infrastructure</li>
+    <li>PWA support — manifest.json, service worker, home-screen install</li>
+    <li>System status page — uptime history, feed reliability metrics</li>
+  </ul>
+
+  <!-- ══════════ OPEN QUESTIONS ══════════ -->
+  <h2 id="open-questions">Open Questions</h2>
+  <p class="section-intro">From the PRD. Items resolved by validation are marked. Remaining items must be answered before or during development.</p>
+
+  <table>
+    <thead><tr><th>Question</th><th>Status</th><th>Answer / Next Step</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Is the GTFS-RT feed accessible without an API key?</td>
+        <td><span class="tag-done">Resolved</span></td>
+        <td>Yes — HTTP 200, no credentials required. Confirmed May 11, 2026.</td>
+      </tr>
+      <tr>
+        <td>Does the GTFS-RT feed include vehicle <code>bearing</code>/<code>heading</code>?</td>
+        <td><span class="tag-done">Resolved</span></td>
+        <td>Yes — 82% of vehicles. 18% need position-delta fallback. Confirmed May 11, 2026.</td>
+      </tr>
+      <tr>
+        <td>What is the actual update frequency of the GTFS-RT feed?</td>
+        <td><span class="tag-done">Resolved</span></td>
+        <td>Exactly 30 seconds — confirmed by timestamp delta between two live polls.</td>
+      </tr>
+      <tr>
+        <td>Does Metro's GTFS data include <code>route_color</code> values?</td>
+        <td><span class="tag-done">Resolved</span></td>
+        <td>Yes — all 50 routes have hex color values in <code>routes.txt</code>.</td>
+      </tr>
+      <tr>
+        <td>How are school special trips represented in the GTFS data?</td>
+        <td><span class="tag-open">Partial</span></td>
+        <td>trip_headsign field present; specific school trip patterns not yet analyzed. Next step: filter trips.txt for headsigns containing "School", "Academy", "HS", etc. and examine trip_id patterns.</td>
+      </tr>
+      <tr>
+        <td>Is there a rate limit on the GTFS-RT endpoint?</td>
+        <td><span class="tag-open">Open</span></td>
+        <td>Not documented by Metro. Mitigated by single-poller backend architecture. Monitor for HTTP 429 or connection resets at launch.</td>
+      </tr>
+      <tr>
+        <td>What is the final project name?</td>
+        <td><span class="tag-open">Open</span></td>
+        <td>"CincyBusTrackr" is working name. Must decide before public launch or domain registration.</td>
+      </tr>
+      <tr>
+        <td>Domain and hosting budget?</td>
+        <td><span class="tag-open">Open</span></td>
+        <td>Railway hobby plan ~$5/mo for always-on backend. Vercel/Netlify free for frontend. Domain: ~$12/yr. Estimate: &lt;$10/mo total.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ MAINTENANCE ══════════ -->
+  <h2 id="maintenance">Maintenance Guide</h2>
+  <p class="section-intro">This app requires periodic manual maintenance. These tasks are non-negotiable — skipping them causes silent inaccuracies.</p>
+
+  <h3>Quarterly (every GTFS feed update)</h3>
+  <ol>
+    <li>Download new GTFS static zip from <code>go-metro.com/uploads/GTFS/google_transit_info.zip</code></li>
+    <li>Check <code>feed_info.txt</code> for new active period dates</li>
+    <li>Run <code>python validate_feed.py --static</code> — verify route_color and trip_headsign still present</li>
+    <li>Diff <code>routes.txt</code> against previous version — identify added/discontinued routes</li>
+    <li>Update <code>config/route_categories.json</code> for any route changes (new routes default to "Minor" pending classification)</li>
+    <li>Re-run GTFS → GeoJSON processor script to update route lines and stops</li>
+    <li>If trip variant labels break (<code>4-A</code>, <code>43-S</code>, etc.), update <code>config/trip_variants.json</code> and test regex against new headsigns</li>
+    <li>Restart backend so it loads the new static data</li>
+    <li>Verify map renders correctly with new data — spot-check 3–4 routes visually</li>
+  </ol>
+
+  <h3>After Metro Service Changes (mid-quarter)</h3>
+  <ol>
+    <li>Monitor Metro's alerts feed and social media for service restructuring announcements</li>
+    <li>If a route changes its path, the shape in GTFS will update — re-process GeoJSON</li>
+    <li>If a route is discontinued, remove from category config to avoid empty dropdowns</li>
+  </ol>
+
+  <h3>Ongoing Monitoring</h3>
+  <ul>
+    <li>Watch <code>/api/health</code> — consecutive failure count should stay at 0</li>
+    <li>If failures spike: check <code>tmgtfsprd.sorttrpcloud.com</code> is still reachable</li>
+    <li>If feed disappears entirely: Metro may have changed the URL — check <code>go-metro.com/developers</code> for updates</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Next Mandatory Maintenance Window</div>
+    <p>GTFS static feed expires <strong>May 30, 2026</strong>. Re-run validation and update processed static files before or immediately after the new feed is published (~June 1, 2026). The backend will continue serving vehicles from the RT feed even after static data expires, but headsigns and route geometry will be stale.</p>
+  </div>
+
+  <!-- ══════════ RISKS ══════════ -->
+  <h2 id="risks">Risk Register</h2>
+
+  <table>
+    <thead><tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Metro kills GTFS-RT feed entirely</td>
+        <td><span class="risk-high">Project-ending</span></td>
+        <td><span class="risk-low">Low</span> — Google Maps &amp; Transit App depend on it</td>
+        <td>No technical workaround. Monitor feed health.</td>
+        <td>Monitored</td>
+      </tr>
+      <tr>
+        <td>Metro changes GTFS-RT endpoint URL</td>
+        <td>Temporary outage</td>
+        <td><span class="risk-medium">Medium</span></td>
+        <td>Health check alerts on consecutive failures. Check <code>go-metro.com/developers</code> for new URL.</td>
+        <td>Mitigated by /api/health</td>
+      </tr>
+      <tr>
+        <td>GTFS-RT feed adds authentication requirement</td>
+        <td><span class="risk-high">Breaks app</span></td>
+        <td><span class="risk-low">Low</span></td>
+        <td>Would need to negotiate API key with Metro. No technical workaround — monitor for HTTP 401/403 in health check.</td>
+        <td>Monitored</td>
+      </tr>
+      <tr>
+        <td>Route category config goes stale</td>
+        <td>Selector inaccuracies</td>
+        <td><span class="risk-high">High</span> — quarterly schedule changes</td>
+        <td>Schedule quarterly review (see Maintenance Guide). New routes appear uncategorized rather than causing errors.</td>
+        <td>Process defined</td>
+      </tr>
+      <tr>
+        <td>Trip variant labels break after GTFS update</td>
+        <td>Wrong suffixes on icons</td>
+        <td><span class="risk-high">High</span></td>
+        <td>Hybrid approach: headsign regex as default (adapts automatically), manual override table for edge cases. Review after each GTFS update.</td>
+        <td>Architecture mitigates</td>
+      </tr>
+      <tr>
+        <td>Performance under full-system load (all 50 routes)</td>
+        <td>Janky map UX</td>
+        <td><span class="risk-medium">Medium</span></td>
+        <td>MapLibre GL JS WebGL rendering, stop clustering at low zoom, polyline simplification. Test at &gt;100 concurrent markers during development.</td>
+        <td>Architecture mitigates</td>
+      </tr>
+      <tr>
+        <td>CORS restriction on GTFS-RT feed from browser</td>
+        <td>Frontend blocked</td>
+        <td>Already materialized — .pb feeds always have CORS issues</td>
+        <td>Backend proxy handles this entirely. Frontend only talks to our own API.</td>
+        <td><span class="risk-low">Resolved by architecture</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════ QUICK REFERENCE ══════════ -->
+  <h2 id="reference">Quick Reference</h2>
+
+  <h3>Key URLs</h3>
+  <table class="fact-table">
+    <tbody>
+      <tr><td>GTFS-RT Feed</td><td><code>https://tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/gtfs-realtime/trapezerealtimefeed.pb</code></td></tr>
+      <tr><td>GTFS-RT Alerts</td><td><code>https://tmgtfsprd.sorttrpcloud.com/TMGTFSRealTimeWebService/alert/alerts.pb</code></td></tr>
+      <tr><td>GTFS Static</td><td><code>https://go-metro.com/uploads/GTFS/google_transit_info.zip</code></td></tr>
+      <tr><td>Metro Schedules</td><td><code>https://go-metro.com/riding-metro/fixed-route-schedules/</code></td></tr>
+      <tr><td>Metro Developers</td><td><code>https://go-metro.com/developers</code></td></tr>
+      <tr><td>PRD Document</td><td><code>CincyBusTrackr_PRD.html</code> (local)</td></tr>
+      <tr><td>Validation Script</td><td><code>validate_feed.py --all</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Recommended Stack</h3>
+  <table class="fact-table">
+    <tbody>
+      <tr><td>Frontend Map</td><td>MapLibre GL JS (WebGL, free, no API key)</td></tr>
+      <tr><td>Frontend Framework</td><td>React + Vite + TypeScript</td></tr>
+      <tr><td>Backend</td><td>Python 3.12 + FastAPI + uvicorn</td></tr>
+      <tr><td>GTFS-RT Parsing</td><td><code>gtfs-realtime-bindings</code> (pip)</td></tr>
+      <tr><td>GTFS Static Processing</td><td>Python — <code>zipfile</code> + <code>csv</code> (built-in), <code>shapely</code> for simplification</td></tr>
+      <tr><td>Backend Hosting</td><td>Railway (always-on, $5/mo) — decision pending</td></tr>
+      <tr><td>Frontend Hosting</td><td>Vercel or Cloudflare Pages (free for static)</td></tr>
+      <tr><td>Map Tiles</td><td>MapTiler free tier or OpenStreetMap (no API key needed)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>direction_id Reference</h3>
+  <table class="fact-table">
+    <tbody>
+      <tr><td><code>direction_id = 0</code></td><td>Outbound</td></tr>
+      <tr><td><code>direction_id = 1</code></td><td>Inbound</td></tr>
+      <tr><td>No direction_id</td><td>Always shown regardless of direction filter (~18% of vehicles)</td></tr>
+    </tbody>
+  </table>
+
+</main>
+
+<!-- ══════════ CHECKBOX PERSISTENCE ══════════ -->
+<script>
+  const STORAGE_KEY = 'cincybust_tasks_v1';
+  const SEED_KEY    = 'cincybust_seeded_v3';
+
+  // Tasks confirmed done in code — seeded once into localStorage so the
+  // progress bar reflects reality. Users can still uncheck manually.
+  const SEEDED_DONE = {
+    // Phase 1 — MVP (all complete except p1-d2/p1-d3 deployment, deferred)
+    'p1-b1': true, 'p1-b2': true, 'p1-b3': true, 'p1-b4': true,
+    'p1-b5': true, 'p1-b6': true, 'p1-b7': true, 'p1-b8': true,
+    'p1-g1': true, 'p1-g2': true, 'p1-g3': true, 'p1-g4': true,
+    'p1-f1': true, 'p1-f2': true, 'p1-f3': true, 'p1-f4': true,
+    'p1-f5': true, 'p1-f6': true, 'p1-f7': true,
+    'p1-s1': true, 'p1-s2': true, 'p1-s3': true,
+    'p1-d1': true, 'p1-d4': true,
+    // Phase 2 — all complete (Session 6)
+    'p2-1': true, 'p2-2': true, 'p2-3': true,
+    'p2-4': true, 'p2-5': true, 'p2-6': true,
+  };
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function updateProgress() {
+    const allTasks = document.querySelectorAll('.task-item[data-id^="p1-"]');
+    const doneTasks = document.querySelectorAll('.task-item[data-id^="p1-"].done');
+    const total = allTasks.length;
+    const done = doneTasks.length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+
+    const fill = document.getElementById('progress-fill');
+    const text = document.getElementById('progress-text');
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = `${done} / ${total} MVP tasks`;
+  }
+
+  function initTasks() {
+    let state = loadState();
+    // Merge seeded-done tasks once per browser, preserving any explicit unchecks
+    if (!localStorage.getItem(SEED_KEY)) {
+      state = Object.assign({}, SEEDED_DONE, state);
+      saveState(state);
+      localStorage.setItem(SEED_KEY, '1');
+    }
+    const items = document.querySelectorAll('.task-item[data-id]');
+
+    items.forEach(item => {
+      const id = item.dataset.id;
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      if (!checkbox) return;
+
+      // Restore state
+      if (state[id]) {
+        checkbox.checked = true;
+        item.classList.add('done');
+      }
+
+      // Handle click on the whole row
+      item.addEventListener('click', (e) => {
+        // Don't double-fire if clicking directly on the checkbox
+        if (e.target === checkbox) return;
+        checkbox.checked = !checkbox.checked;
+        toggleTask(item, checkbox, id);
+      });
+
+      checkbox.addEventListener('change', () => {
+        toggleTask(item, checkbox, id);
+      });
+    });
+
+    updateProgress();
+  }
+
+  function toggleTask(item, checkbox, id) {
+    const state = loadState();
+    if (checkbox.checked) {
+      item.classList.add('done');
+      state[id] = true;
+    } else {
+      item.classList.remove('done');
+      delete state[id];
+    }
+    saveState(state);
+    updateProgress();
+  }
+
+  document.addEventListener('DOMContentLoaded', initTasks);
+</script>
+
+</body>
+</html>
