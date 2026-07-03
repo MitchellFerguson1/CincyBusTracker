@@ -120,6 +120,7 @@ interface Props {
   darkMode: boolean;
   isStale?: boolean;
   hoveredRouteIds?: Set<string> | null;
+  altColorMap?: Record<string, string> | null;
 }
 
 type MarkerEntry = {
@@ -140,7 +141,7 @@ type AnimTarget = {
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hoveredRouteIds }: Props) {
+export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hoveredRouteIds, altColorMap }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
@@ -298,6 +299,24 @@ export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hove
     }
   }, [visibleRouteIds, mapReady]);
 
+  // ── Alt route line colors ──────────────────────────────────────────────────
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+
+    if (altColorMap && Object.keys(altColorMap).length > 0) {
+      const pairs: unknown[] = [];
+      for (const [id, color] of Object.entries(altColorMap)) {
+        pairs.push(id, color);
+      }
+      map.setPaintProperty("route-lines", "line-color", [
+        "match", ["get", "route_id"], ...pairs, "#888888",
+      ]);
+    } else {
+      map.setPaintProperty("route-lines", "line-color", ["get", "route_color"]);
+    }
+  }, [altColorMap, mapReady]);
+
   // ── Route line hover highlight ─────────────────────────────────────────────
   useEffect(() => {
     const map = mapRef.current;
@@ -358,7 +377,7 @@ export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hove
     const now = performance.now();
 
     for (const v of vehicles) {
-      const color = v.route_color || "#1a6dba";
+      const color = altColorMap?.[v.route_id] ?? v.route_color ?? "#1a6dba";
       const textColor = v.route_text_color || contrastColor(color);
       const label = `${v.route_short_name ?? v.route_id}${v.trip_variant ? `-${v.trip_variant}` : ""}`;
       const opacity = v.stale ? "0.35" : "1";
@@ -471,7 +490,7 @@ export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hove
         });
       }
     }
-  }, [vehicles, visibleRouteIds, mapReady]);
+  }, [vehicles, visibleRouteIds, mapReady, altColorMap]);
 
   const mapBtnStyle: React.CSSProperties = {
     position: "absolute",
@@ -499,7 +518,7 @@ export default function Map({ vehicles, visibleRouteIds, darkMode, isStale, hove
         aria-label="Cincinnati Metro bus map"
       />
       <button
-        style={{ ...mapBtnStyle, top: "149px" }}
+        style={{ ...mapBtnStyle, top: "188px" }}
         onClick={() => mapRef.current?.flyTo({ center: CENTER, zoom: ZOOM })}
         title="Re-center map"
         aria-label="Re-center map"

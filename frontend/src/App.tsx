@@ -7,6 +7,15 @@ import { useRoutes } from "./hooks/useRoutes";
 import { useVehicles } from "./hooks/useVehicles";
 import type { DirectionFilter } from "./types";
 
+const ALT_CATEGORY_COLORS: Record<string, string> = {
+  Core: "#df6b2a",
+  Major: "#426caa",
+  Minor: "#6cc4e8",
+  Commuter: "#f78d2b",
+  Express: "#d6c727",
+  Crosstown: "#df6b2a",
+};
+
 // Read URL params once on mount (before any state is set)
 function readUrlParams(): { routes: string[] | null; dir: string | null } {
   const p = new URLSearchParams(window.location.search);
@@ -36,6 +45,17 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem("darkMode") === "true"
   );
+
+  const [altColors, setAltColors] = useState(false);
+
+  const altColorMap = useMemo<Record<string, string> | null>(() => {
+    if (!altColors || routes.length === 0) return null;
+    return Object.fromEntries(
+      routes.flatMap((r) =>
+        r.category && ALT_CATEGORY_COLORS[r.category] ? [[r.route_id, ALT_CATEGORY_COLORS[r.category]]] : []
+      )
+    );
+  }, [altColors, routes]);
 
   const [hoveredCategoryRouteIds, setHoveredCategoryRouteIds] = useState<Set<string> | null>(null);
 
@@ -99,6 +119,7 @@ export default function App() {
         darkMode={darkMode}
         isStale={isDown}
         hoveredRouteIds={hoveredCategoryRouteIds}
+        altColorMap={altColorMap}
       />
       <RouteSelector
         routes={routes}
@@ -133,6 +154,35 @@ export default function App() {
         aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       >
         {darkMode ? "☀" : "☾"}
+      </button>
+      <button
+        style={{
+          position: "absolute",
+          top: "149px",
+          right: "10px",
+          zIndex: 10,
+          width: "29px",
+          height: "29px",
+          background: altColors ? "#19468d" : "#fff",
+          border: "none",
+          borderRadius: "4px",
+          boxShadow: "0 0 0 2px rgba(0,0,0,0.1)",
+          cursor: "pointer",
+          fontSize: "9px",
+          fontWeight: 700,
+          color: altColors ? "#fff" : "#444",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 0,
+          letterSpacing: "-0.02em",
+        }}
+        onClick={() => setAltColors((a) => !a)}
+        title={altColors ? "Revert to GTFS route colors" : "Try alt category colors"}
+        aria-label="Toggle alt route colors"
+        aria-pressed={altColors}
+      >
+        ALT
       </button>
       <AlertsBar />
       <StatusBar
