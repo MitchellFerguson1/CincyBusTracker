@@ -15,6 +15,8 @@ echo "Starting CincyBusTrackr dev servers…"
 
 # Backend
 cd "$ROOT/backend"
+echo "  Installing backend dependencies…"
+python3 -m pip install -q -r requirements.txt
 python3 -m uvicorn app.main:app --port 8000 &
 BACKEND_PID=$!
 
@@ -27,6 +29,8 @@ echo "  Backend ready."
 
 # Frontend
 cd "$ROOT/frontend"
+echo "  Installing frontend dependencies…"
+npm install --silent
 npm run dev &
 FRONTEND_PID=$!
 
